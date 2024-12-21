@@ -1,12 +1,19 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import LoginView from '../views/LoginView.vue'
-import RegisterView from '../views/RegisterView.vue'
+import { createRouter, createWebHistory } from "vue-router";
+import HomeView from "../views/HomeView.vue";
+import LoginView from "../views/LoginView.vue";
+import RegisterView from "../views/RegisterView.vue";
+import FireDetectionView from "../views/FireDetectionView.vue";
+import TeethDetectionView from "../views/TeethDetectionView.vue";
 
 const routes = [
-  {path: '/', name: 'login', component: LoginView},
-  {path: '/register', name: 'register', component: RegisterView},
-  {path: '/home', name: 'home', component: HomeView}
+  { path: "/", name: "login", component: LoginView },
+  { path: "/register", name: "register", component: RegisterView },
+  { path: "/fire-detect", name: "fire-detect", component: FireDetectionView },
+  {
+    path: "/decay-detect",
+    name: "decay-detect",
+    component: TeethDetectionView,
+  },
 ];
 
 const router = createRouter({
@@ -14,4 +21,4 @@ const router = createRouter({
   routes,
 });
 
-export default router
+export default router;

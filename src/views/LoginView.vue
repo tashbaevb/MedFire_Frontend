@@ -28,7 +28,7 @@ export default {
         const data = await response.json();
         localStorage.setItem("access_token", data.access_token);
 
-        this.$router.push("/home");
+        this.$router.push("/fire-detect");
       } catch (error) {
         console.error("Error during login: ", error);
         alert("Login failed");
