@@ -1,37 +1,11 @@
-/*=============== GOOGLE FONTS ===============*/
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap");
-
-/*=============== VARIABLES CSS ===============*/
-:root {
-  --primary: #5353ed;
-  --white-color: #fff;
-  --light-color: #e6e6ed;
-  --grey-color: #a4b0be;
-  --dark-color: #2f3542;
-}
-
-/*=============== BASE ===============*/
 * {
   margin: 0;
   padding: 0;
 }
 
-*,
-::before,
-::after {
-  box-sizing: border-box;
-}
-
 a {
   text-decoration: none;
   color: inherit;
-}
-
-/* remove blue tap on mobile */
-a,
-button,
-input {
-  -webkit-tap-highlight-color: transparent;
 }
 
 ul {
@@ -128,8 +102,13 @@ nav ul li:last-child a:hover {
 }
 
 .heading h2 {
+  text-align: center;
   font-size: 42px;
   margin-top: 50px;
+}
+
+.sign-in-up-btn {
+  text-align: center;
 }
 
 .heading p,

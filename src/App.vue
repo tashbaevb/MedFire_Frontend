@@ -1,17 +1,17 @@
 <template>
-  <div id="app">
-    <nav>
+    <!-- <div id="app"> -->
+    <!-- <nav>
       <router-link to="/">Login</router-link>
       <router-link to="/register">Register</router-link>
       <router-link to="/home">Home</router-link>
-    </nav>
-    
+    </nav> -->
+
     <router-view />
-  </div>
+    <!-- </div> -->
 </template>
 
 <script>
 export default {
-  name: 'App',
+    name: "App",
 };
 </script>
