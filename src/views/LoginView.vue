@@ -10,6 +10,7 @@ export default {
   },
   methods: {
     async handleLogin() {
+      console.log("Login with:", this.email, this.password);
       this.loading = true;
       this.error = null;
       
@@ -24,14 +25,15 @@ export default {
         });
 
         if (!response.ok) {
-          throw new Error("Invalid credentials");
+          throw new Error("Anmeldung fehlgeschlagen");
         }
 
         const data = await response.json();
         localStorage.setItem("access_token", data.access_token);
         this.$router.push("/fire-detect");
       } catch (error) {
-        this.error = error.message;
+        console.error("Error during login: ", error);
+        this.error = "Anmeldung fehlgeschlagen. Bitte versuchen Sie es erneut.";
       } finally {
         this.loading = false;
       }
@@ -45,19 +47,19 @@ export default {
     <div class="login-card">
       <div class="brand-section">
         <div class="logo">🦷🔥</div>
-        <h1 class="welcome-text">Welcome Back</h1>
-        <p class="subtitle">Start detecting dental caries and smoke with AI</p>
+        <h1 class="welcome-text">Willkommen zurück</h1>
+        <p class="subtitle">Starten Sie die KI-gestützte Erkennung von Karies und Rauch</p>
       </div>
 
       <form @submit.prevent="handleLogin" class="login-form">
         <div class="input-group">
-          <label for="email">Email</label>
+          <label for="email">E-Mail</label>
           <div class="input-wrapper">
             <input
               id="email"
               type="email"
               v-model="email"
-              placeholder="Enter your email"
+              placeholder="Geben Sie Ihre E-Mail ein"
               required
               class="form-input"
             />
@@ -66,13 +68,13 @@ export default {
         </div>
 
         <div class="input-group">
-          <label for="password">Password</label>
+          <label for="password">Passwort</label>
           <div class="input-wrapper">
             <input
               id="password"
               type="password"
               v-model="password"
-              placeholder="Enter your password"
+              placeholder="Geben Sie Ihr Passwort ein"
               required
               class="form-input"
             />
@@ -86,14 +88,14 @@ export default {
         </div>
 
         <button type="submit" class="login-btn" :disabled="loading">
-          <span>{{ loading ? 'Signing in...' : 'Sign In' }}</span>
+          <span>{{ loading ? 'Anmeldung...' : 'Anmelden' }}</span>
           <i class="fas fa-arrow-right" v-if="!loading"></i>
         </button>
       </form>
 
       <p class="register-link">
-        Don't have an account yet? 
-        <router-link to="/register">Create Account</router-link>
+        Noch kein Konto? 
+        <router-link to="/register">Konto erstellen</router-link>
       </p>
     </div>
   </div>

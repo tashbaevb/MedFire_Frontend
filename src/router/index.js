@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 import LoginView from "../views/LoginView.vue";
 import RegisterView from "../views/RegisterView.vue";
-import UploadImage from "../views/UploadImage.vue";
+import FireDetectionView from "../views/FireDetectionView.vue";
+import TeethDetectionView from "../views/TeethDetectionView.vue";
 
 const routes = [
   { 
@@ -15,10 +16,16 @@ const routes = [
     component: RegisterView 
   },
   {
-    path: "/upload",
-    name: "upload",
-    component: UploadImage
-    // Убрали meta: { requiresAuth: true }
+    path: "/fire-detect",
+    name: "fire-detect",
+    component: FireDetectionView,
+    // meta: { requiresAuth: true }
+  },
+  {
+    path: "/teeth-detect",
+    name: "teeth-detect",
+    component: TeethDetectionView,
+    // meta: { requiresAuth: true }
   }
 ];
 
@@ -27,10 +34,16 @@ const router = createRouter({
   routes,
 });
 
-// Упрощаем middleware, оставляем только анимации
 router.beforeEach((to, from, next) => {
-  to.meta.transition = 'page';
-  next();
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+  const token = localStorage.getItem('access_token');
+
+  if (requiresAuth && !token) {
+    next('/');
+  } else {
+    to.meta.transition = 'page';
+    next();
+  }
 });
 
 export default router;
