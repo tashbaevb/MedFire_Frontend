@@ -1,0 +1,72 @@
+.page-enter-active,
+.page-leave-active {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.page-enter-from {
+  opacity: 0;
+  transform: translate(100px, 0);
+}
+
+.page-leave-to {
+  opacity: 0;
+  transform: translate(-100px, 0);
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+/* Анимация для полей формы */
+.form-enter-active {
+  transition: all 0.3s ease-out;
+  transition-delay: 0.2s;
+}
+
+.form-leave-active {
+  transition: all 0.3s ease-in;
+}
+
+.form-enter-from,
+.form-leave-to {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* Анимация для кнопок */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.submit-btn, .login-btn {
+  animation: slideIn 0.5s ease-out forwards;
+}
+
+/* Анимация для логотипа */
+@keyframes scalePop {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.logo {
+  animation: scalePop 0.5s ease-out forwards;
+}

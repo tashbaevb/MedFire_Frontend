@@ -1,24 +1,36 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
 import LoginView from "../views/LoginView.vue";
 import RegisterView from "../views/RegisterView.vue";
-import FireDetectionView from "../views/FireDetectionView.vue";
-import TeethDetectionView from "../views/TeethDetectionView.vue";
+import UploadImage from "../views/UploadImage.vue";
 
 const routes = [
-  { path: "/", name: "login", component: LoginView },
-  { path: "/register", name: "register", component: RegisterView },
-  { path: "/fire-detect", name: "fire-detect", component: FireDetectionView },
-  {
-    path: "/decay-detect",
-    name: "decay-detect",
-    component: TeethDetectionView,
+  { 
+    path: "/", 
+    name: "login", 
+    component: LoginView 
   },
+  { 
+    path: "/register", 
+    name: "register", 
+    component: RegisterView 
+  },
+  {
+    path: "/upload",
+    name: "upload",
+    component: UploadImage
+    // Убрали meta: { requiresAuth: true }
+  }
 ];
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
+});
+
+// Упрощаем middleware, оставляем только анимации
+router.beforeEach((to, from, next) => {
+  to.meta.transition = 'page';
+  next();
 });
 
 export default router;

@@ -4,17 +4,19 @@ export default {
     return {
       email: "",
       password: "",
+      loading: false,
+      error: null
     };
   },
   methods: {
     async handleLogin() {
-      console.log("Login with:", this.email, this.password);
+      this.loading = true;
+      this.error = null;
+      
       try {
         const response = await fetch("http://localhost:8091/auth", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             email: this.email,
             password: this.password,
@@ -22,92 +24,88 @@ export default {
         });
 
         if (!response.ok) {
-          throw new Error("Login failed");
+          throw new Error("Invalid credentials");
         }
 
         const data = await response.json();
         localStorage.setItem("access_token", data.access_token);
-
         this.$router.push("/fire-detect");
       } catch (error) {
-        console.error("Error during login: ", error);
-        alert("Login failed");
+        this.error = error.message;
+      } finally {
+        this.loading = false;
       }
-    },
-
-    // togglePassword() {
-    //   this.showPassword = !this.showPassword;
-    //   const input = document.getElementById("user-login-pass");
-    //   input.type = this.showPassword ? "text" : "password";
-    // },
-  },
+    }
+  }
 };
 </script>
 
 <template>
-  <div class="site signin-show">
-    <div class="container">
-      <div class="theform">
-        <!-- <div class="play">
-          <div class="wrapper">
-            <div class="card one"></div>
-            <div class="card two"></div>
-            <div class="card three"></div>
-            <div class="card four"></div>
-            <div class="card five"></div>
-          </div>
-        </div> -->
-        <div class="signin">
-          <div class="heading">
-            <h2>Anmelden</h2>
-          </div>
-          <form @submit.prevent="handleLogin">
-            <p>
-              <label for="user-email-login"></label>
-              <i class="ri-mail-line"></i>
-              <input
-                type="text"
-                placeholder="E-Mail"
-                id="user-email-login"
-                v-model="email"
-              />
-            </p>
-            <p>
-              <label for="user-login-pass"></label>
-              <i class="ri-lock-line"></i>
-              <i
-                class="ri-eye-off-line icon-password trigger"
-                @click="togglePassword"
-              ></i>
-              <input
-                type="password"
-                placeholder="Passwort"
-                class="pass-input"
-                id="user-login-pass"
-                v-model="password"
-              />
-            </p>
-            <div class="actions">
-              <label>
-                <input type="submit" value="Anmelden" />
-                <i class="ri-arrow-right-line"></i>
-              </label>
-            </div>
-            <div class="sign-in-up-btn">
-              <p>
-                Kein Konto?
-                <router-link to="/register" class="t-signup"
-                  >Registrieren</router-link
-                >
-              </p>
-            </div>
-          </form>
-        </div>
+  <div class="login-container">
+    <div class="login-card">
+      <div class="brand-section">
+        <div class="logo">🦷🔥</div>
+        <h1 class="welcome-text">Welcome Back</h1>
+        <p class="subtitle">Start detecting dental caries and smoke with AI</p>
       </div>
+
+      <form @submit.prevent="handleLogin" class="login-form">
+        <div class="input-group">
+          <label for="email">Email</label>
+          <div class="input-wrapper">
+            <input
+              id="email"
+              type="email"
+              v-model="email"
+              placeholder="Enter your email"
+              required
+              class="form-input"
+            />
+            <i class="fas fa-envelope"></i>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="password">Password</label>
+          <div class="input-wrapper">
+            <input
+              id="password"
+              type="password"
+              v-model="password"
+              placeholder="Enter your password"
+              required
+              class="form-input"
+            />
+            <i class="fas fa-lock"></i>
+          </div>
+        </div>
+
+        <div v-if="error" class="error-message">
+          <i class="fas fa-exclamation-circle"></i>
+          {{ error }}
+        </div>
+
+        <button type="submit" class="login-btn" :disabled="loading">
+          <span>{{ loading ? 'Signing in...' : 'Sign In' }}</span>
+          <i class="fas fa-arrow-right" v-if="!loading"></i>
+        </button>
+      </form>
+
+      <p class="register-link">
+        Don't have an account yet? 
+        <router-link to="/register">Create Account</router-link>
+      </p>
     </div>
   </div>
 </template>
 
 <style scoped>
-@import "../assets/auth.css";
+@import '../assets/login.css';
+@import '../assets/transitions.css';
+/* Переопределяем классы для логина */
+.register-container { composes: login-container; }
+.register-card { composes: login-card; }
+.register-form { composes: login-form; }
+.register-btn { composes: login-btn; }
+.login-link { composes: register-link; }
 </style>
