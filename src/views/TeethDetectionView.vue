@@ -54,7 +54,8 @@ export default {
   border: 2px solid #e2e8f0;
 }
 
-.nav-btn:hover, .nav-btn.active {
+.nav-btn:hover,
+.nav-btn.active {
   background: #2563eb;
   color: white;
   transform: translateY(-2px);
